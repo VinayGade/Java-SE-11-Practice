@@ -1,6 +1,8 @@
 package streams;
 
+import beans.Department;
 import beans.Dish;
+import beans.Employee;
 import beans.Instructor;
 import beans.enums.Category;
 
@@ -133,6 +135,40 @@ public class Mapping {
         System.out.println("\nMultiple of 10");
         multipleOf10.forEach(n->System.out.print(" "+n));
 
+        System.out.println("\nflatMap Employees based on Department");
+
+        Employee employee1 = new Employee("Vinay", 30, "M");
+        Employee employee2 = new Employee("Ganesh", 31, "M");
+        Employee employee3 = new Employee("Smita", 38, "F");
+        Employee employee4 = new Employee("Shruti", 40, "F");
+
+        Employee employee5 = new Employee("Sayli", 29, "F");
+        Employee employee6 = new Employee("Mahesh", 33, "M");
+        Employee employee7 = new Employee("Raj", 36, "M");
+        Employee employee8 = new Employee("Deepa", 27, "F");
+
+        Department dev = new Department("Development");
+        Department qa = new Department("QA");
+        Department mgmt = new Department("Management");
+        Department hr = new Department("HR");
+
+        dev.addEmployees(employee1);
+        dev.addEmployees(employee8);
+
+        qa.addEmployees(employee2);
+        qa.addEmployees(employee7);
+
+        mgmt.addEmployees(employee6);
+        mgmt.addEmployees(employee3);
+
+        hr.addEmployees(employee4);
+        hr.addEmployees(employee5);
+
+        List<Department> departments = List.of(dev, hr, qa, mgmt);
+
+        departments.stream()
+                .flatMap( department -> department.getEmployees().stream())
+                .forEach(System.out::println);
     }
 
     public List<String> dishByCategory(List<Dish> dishes, Category category){

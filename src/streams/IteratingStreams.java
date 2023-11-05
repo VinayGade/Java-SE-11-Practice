@@ -104,5 +104,41 @@ public class IteratingStreams {
 
         IntStream.range(1, 200).parallel().filter(i -> i % 10 == 0)
                 .forEachOrdered(e->System.out.print(" "+e));
+
+        List<String> flatNumbers = List.of("A13", "B21", "D22",
+                "a02", "E32", "C32",
+                "C22", "b13", "A32",
+                "d03", "c11", "D31", "A33", "e01");
+
+        System.out.println("\nFlats in D wing :");
+
+        flatNumbers.stream()
+                .filter(flat -> (flat.startsWith("D") || flat.startsWith("d")))
+                .forEach(System.out::println);
+
+        System.out.println("\nFlats in A wing (Case insensitive):");
+
+        List<String> flatsA = flatNumbers.stream()
+                .map(String::toUpperCase)  //.map(flat -> flat.toUpperCase())
+                .filter(flat -> flat.startsWith("A"))
+                .sorted()
+                .collect(Collectors.toList());
+
+        flatsA.forEach(System.out::println);
+
+        System.out.println("\n Concatenate 2 streams :");
+        Stream<Integer> numbers1 = Stream.of(10, 20 ,30, 40, 50, 60, 80, 100);
+        Stream<Integer> numbers2 = Stream.of(5, 10, 15, 20, 25, 45, 75, 80);
+
+        //System.out.println("numbers1 count ="+numbers1.count());
+        //System.out.println("numbers2 count ="+numbers2.count());
+        Stream<Integer> combined = Stream.concat(numbers1, numbers2).sorted();
+        //System.out.println("combined count ="+combined.count());
+        // System.out.println("combined distinct count ="+combined.distinct().count());
+        combined.forEach( n-> System.out.print(" "+n));
+        /*
+        System.out.println("combined distinct peek element =");
+        combined.distinct().peek(System.out::println);
+         */
     }
 }

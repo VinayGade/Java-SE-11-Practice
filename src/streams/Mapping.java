@@ -169,6 +169,24 @@ public class Mapping {
         departments.stream()
                 .flatMap( department -> department.getEmployees().stream())
                 .forEach(System.out::println);
+
+        // separate male and  females from employees
+        Map<String, List<Employee>> groupByGender = departments
+                .stream()
+                .flatMap( department -> department.getEmployees().stream())
+                .collect(Collectors.groupingBy(Employee::getGender));
+
+        System.out.println("\nEmployees group by gender:\n");
+        groupByGender.forEach((k, v) -> {
+            System.out.println("Gender: "+k);
+            v.forEach(System.out::println);
+        });
+
+        System.out.println("\nYoungest Employee from all departments:\n");
+        departments.stream()
+                .flatMap( department -> department.getEmployees().stream())
+                .reduce((e1, e2) -> e1.getAge() < e2.getAge() ? e1 : e2)
+                .ifPresent(System.out::println);
     }
 
     public List<String> dishByCategory(List<Dish> dishes, Category category){

@@ -332,5 +332,10 @@ public class FilteringStreams {
         Stream<Integer> randoms = Stream.generate(new Random()::nextInt).limit(10);
         randoms.forEach(random -> System.out.print(random+" "));
 
+        // ways to represent numeric streams
+
+        Stream<Integer> integers = Stream.of(100, 150, 180, 240, 360, 500);
+        Stream<? extends Number> numbersL = Stream.of(1000L, 100000L, 4000000000L, 100);
+
     }
 }

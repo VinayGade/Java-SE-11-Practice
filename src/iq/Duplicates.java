@@ -11,6 +11,22 @@ import java.util.stream.Collectors;
 //10,20,30,40,40,30,50
 public class Duplicates {
 
+    List<Integer> listDuplicateUsingFilterAndSetAdd(List<Integer> list) {
+        Set<Integer> elements = new HashSet<Integer>();
+        return list.stream()
+                .filter(n -> !elements.add(n))
+                .collect(Collectors.toList());
+    }
+
+    List<Integer> listDuplicateUsingCollectionsFrequency(List<Integer> list) {
+        List<Integer> duplicates = new ArrayList<>();
+        Set<Integer> set = list.stream()
+                .filter(i -> Collections.frequency(list, i) > 1)
+                .collect(Collectors.toSet());
+        duplicates.addAll(set);
+        return duplicates;
+    }
+
     public static void main(String[] args) {
 
         List<Integer> numbers = Arrays.asList(10,20,30,40,40,30,50, 100, 90, 80, 10, 30, 50);

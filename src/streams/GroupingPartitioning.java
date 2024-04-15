@@ -19,7 +19,7 @@ public class GroupingPartitioning {
 
         List<String> programmingLanguages = List
                 .of("Java", "Scala", "Python", "Go", "Ruby", "Perl", "C#", "C++", "C",
-                        "SQL", "JavaScript", "TypeScript", "R",  "Elixir", "Erlang", "Rust",
+                        "SQL", "JavaScript", "TypeScript", "R", "Elixir", "Erlang", "Rust",
                         "OCaml", "Racket", "F#", "Lisp", "Cobol", "Haskell", "Closure", "Julia");
 
 
@@ -29,9 +29,9 @@ public class GroupingPartitioning {
 
         System.out.println("\n Programming Languages group by length :");
 
-        programmingGroups.forEach((length, languages) ->{
-            System.out.println("length ="+length);
-            System.out.println(" languages :"+languages);
+        programmingGroups.forEach((length, languages) -> {
+            System.out.println("length =" + length);
+            System.out.println(" languages :" + languages);
         });
 
         System.out.println("\n  Group Instructors by Online");
@@ -39,12 +39,12 @@ public class GroupingPartitioning {
         Map<Boolean, List<Instructor>> onlineInstructors = Instructors.getAll().stream()
                 .collect(Collectors.groupingBy(Instructor::isOnlineCourses));
 
-        onlineInstructors.forEach((isOnline, instructors) ->{
+        onlineInstructors.forEach((isOnline, instructors) -> {
             System.out.println(isOnline ? "Online" : "Offline");
             instructors.forEach(System.out::println);
         });
 
-        DishesGenerator dishesGenerator= new DishesGenerator();
+        DishesGenerator dishesGenerator = new DishesGenerator();
 
         List<Dish> menuCard = dishesGenerator.populateSpecialMenu();
 
@@ -55,15 +55,15 @@ public class GroupingPartitioning {
                 .collect(Collectors.groupingBy(Dish::getCategory));
 
         categorizedDishes.forEach((category, dishes) -> {
-            System.out.println("Category ="+category);
+            System.out.println("Category =" + category);
             dishes.forEach(System.out::println);
         });
 
         System.out.println("\nHigh Calorie and Low Calorie Non-Veg Menu :");
         Map<String, List<Dish>> nonVegMenu = menuCard.stream()
-                .filter(dish -> !dish.isVegOnly())
+                .filter(Dish::isVegOnly)
                 .collect(Collectors.groupingBy(
-                        dish -> dish.getCalories() <=170 ? "Low Calorie Menu" : "High Calorie Menu"));
+                        dish -> dish.getCalories() <= 170 ? "Low Calorie Menu" : "High Calorie Menu"));
 
         nonVegMenu.forEach((calories, menu) -> {
             System.out.println(calories);
@@ -78,11 +78,14 @@ public class GroupingPartitioning {
 
 
         System.out.println("\nVeg Menu Group by category:");
-        for(Map.Entry<Category, List<Dish>> vegMenuEntry : vegMenu.entrySet()){
+        for (Map.Entry<Category, List<Dish>> vegMenuEntry : vegMenu.entrySet()) {
             Category category = vegMenuEntry.getKey();
-            switch(category){
+            switch (category) {
                 //case EGG, CHICKEN, FISH, MEAT:  // Java 14+
-                case EGG: case CHICKEN : case FISH : case MEAT:
+                case EGG:
+                case CHICKEN:
+                case FISH:
+                case MEAT:
                     continue;
                 default:
                     System.out.println(category.name());
@@ -108,7 +111,7 @@ public class GroupingPartitioning {
         List<String> name = List.of("Sid", "Mike", "Jenny", "Gene", "Rajeev");
         Map<Integer, List<String>> result = name.stream()
                 .collect(Collectors.groupingBy(String::length, Collectors
-                        .filtering(s-> s.contains("e"),Collectors.toList())));
+                        .filtering(s -> s.contains("e"), Collectors.toList())));
 
         System.out.println("\nresult = " + result);
         System.out.println("\n------------------ Senior and Junior Instructors :");
@@ -117,7 +120,7 @@ public class GroupingPartitioning {
         //on online courses
         Map<String, List<Instructor>> instructorByExpAndOnline = Instructors.getAll()
                 .stream().collect(Collectors.groupingBy(instructor ->
-                                instructor.getYearsOfExperience()>10 ? "SENIOR": "JUNIOR",
+                                instructor.getYearsOfExperience() > 10 ? "SENIOR" : "JUNIOR",
                         Collectors.filtering(Instructor::isOnlineCourses,
                                 Collectors.toList())));
 
@@ -130,7 +133,7 @@ public class GroupingPartitioning {
         Map<Integer, List<String>> result2 = name.stream()
                 .collect(Collectors.groupingBy(String::length,
                         LinkedHashMap::new,
-                        Collectors.filtering(s-> s.contains("e"),Collectors.toList())));
+                        Collectors.filtering(s -> s.contains("e"), Collectors.toList())));
         System.out.println("\nresult2 = " + result2);
 
         List<String> list = new ArrayList<>(Arrays.asList("Foo", "Bar", "Bar", "Bar", "Foo"));
@@ -147,27 +150,27 @@ public class GroupingPartitioning {
                         Collectors.maxBy(Comparator.comparingInt(
                                 Dish::getCalories))));
 
-        maxCalorieDishesPerCategory.forEach(( category, dish)->{
-                System.out.println(category.toString());
-                dish.ifPresent(System.out::println);
+        maxCalorieDishesPerCategory.forEach((category, dish) -> {
+            System.out.println(category.toString());
+            dish.ifPresent(System.out::println);
         });
 
         //collectingAndThen
         System.out.println("\n  Minimum calorie Non Veg dish per Category");
 
         Map<Category, Dish> minCalorieNonVegDishesPerCategory = menuCard.stream()
-                .filter(dish->!dish.isVegOnly())
+                .filter(dish -> !dish.isVegOnly())
                 .collect(Collectors.groupingBy(Dish::getCategory,
                         LinkedHashMap::new,
                         Collectors.collectingAndThen(
-                        Collectors.minBy(Comparator.comparingInt(
-                                Dish::getCalories)),
+                                Collectors.minBy(Comparator.comparingInt(
+                                        Dish::getCalories)),
                                 Optional::get)));
 
-        minCalorieNonVegDishesPerCategory.forEach(( category, dish)-> {
-                    System.out.println(category.toString());
-                    System.out.println(dish);
-                });
+        minCalorieNonVegDishesPerCategory.forEach((category, dish) -> {
+            System.out.println(category.toString());
+            System.out.println(dish);
+        });
 
         System.out.println("\n  Maximum calorie Veg dish per Category");
 
@@ -176,11 +179,26 @@ public class GroupingPartitioning {
                 .collect(Collectors.toMap(Dish::getCategory,
                         Function.identity(),
                         BinaryOperator.maxBy(Comparator.comparingInt(
-                            Dish::getCalories))));
+                                Dish::getCalories))));
 
-        maxCalorieVegDishesPerCategory.forEach(( category, dish)-> {
+        maxCalorieVegDishesPerCategory.forEach((category, dish) -> {
             System.out.println(category.name());
             System.out.println(dish);
+        });
+
+        System.out.println("\n  Maximum calorie dish per Category");
+
+        Map<Category, Dish> maxCalorieDishCategory = menuCard.stream()
+                .collect(Collectors.toMap(Dish::getCategory,
+                        Function.identity(),
+                        BinaryOperator.maxBy(
+                                Comparator.comparingInt(Dish::getCalories)
+                        )
+                ));
+
+        maxCalorieDishCategory.forEach((category, dish) -> {
+            System.out.println("\nCategory: "+category.name());
+            System.out.println("Dish: "+dish.toString());
         });
 
         System.out.println("\n  Average calories of dishes per Category");
@@ -190,7 +208,7 @@ public class GroupingPartitioning {
                         Collectors.averagingInt(
                                 Dish::getCalories)));
 
-        averageCalorieDishPerCategory.forEach(( category, avgCalories)-> {
+        averageCalorieDishPerCategory.forEach((category, avgCalories) -> {
             System.out.println(category.name());
             System.out.println(avgCalories);
         });
@@ -202,7 +220,7 @@ public class GroupingPartitioning {
                         Collectors.summarizingInt(
                                 Dish::getCalories)));
 
-        summarizeCalorieDishPerCategory.forEach(( category, avgCalories)-> {
+        summarizeCalorieDishPerCategory.forEach((category, avgCalories) -> {
             System.out.println(category.name());
             System.out.println(avgCalories);
         });
@@ -214,7 +232,7 @@ public class GroupingPartitioning {
                         Collectors.summarizingDouble(
                                 Dish::getPrice)));
 
-        summarizeCostDishPerCategory.forEach(( category, avgCalories)-> {
+        summarizeCostDishPerCategory.forEach((category, avgCalories) -> {
             System.out.println(category.name());
             System.out.println(avgCalories);
         });
@@ -226,7 +244,7 @@ public class GroupingPartitioning {
         Map<Boolean, List<Dish>> partitionByType = menuCard.stream()
                 .collect(Collectors.partitioningBy(Dish::isVegOnly));
 
-        partitionByType.forEach((type, dishes) ->{
+        partitionByType.forEach((type, dishes) -> {
             System.out.println(type ? "Veg" : "Non-Veg");
             dishes.forEach(System.out::println);
         });
@@ -235,10 +253,10 @@ public class GroupingPartitioning {
 
         Map<Boolean, Set<Dish>> partitionByCategory = menuCard.stream()
                 .collect(Collectors.partitioningBy(dish ->
-                        dish.getCategory().ordinal()<3,
+                                dish.getCategory().ordinal() < 3,
                         Collectors.toSet()));
 
-        partitionByCategory.forEach((type, dishes) ->{
+        partitionByCategory.forEach((type, dishes) -> {
             System.out.println(type ? "Veg" : "Non-Veg");
             dishes.forEach(System.out::println);
         });
@@ -258,23 +276,30 @@ public class GroupingPartitioning {
                 .collect(Collectors.groupingBy(
                         Function.identity(), Collectors.counting()));
 
+        List<String> repeatingChars=
+        charFrequencyMap.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue()>1)
+                        .map(entry -> entry.getKey())
+                                .collect(Collectors.toList());
+
         System.out.println(charMap);
 
-        System.out.println("\nChar Frequency Map"+charFrequencyMap);
+        System.out.println("\nChar Frequency Map" + charFrequencyMap);
 
         System.out.println("\n\n----------------------------Duplicate elements in String -------------------------------");
 
-        List<String> duplicates =Arrays.stream(characters)
+        List<String> duplicates = Arrays.stream(characters)
                 .filter(s -> !s.equals(" "))
                 .collect(Collectors.groupingBy(
                         Function.identity(), Collectors.counting()))
                 .entrySet()
                 .stream()
                 .filter(entry -> entry.getValue() > 1)
-                .map(Map.Entry :: getKey)
+                .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
 
-        System.out.println("\n Duplicate elements :"+duplicates);
+        System.out.println("\n Duplicate elements :" + duplicates);
 
         System.out.println("\n\n----------------------------Distinct characters in String -------------------------------");
 
@@ -287,7 +312,7 @@ public class GroupingPartitioning {
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
 
-        distinctChars.forEach(ch -> System.out.print(ch+" "));
+        distinctChars.forEach(ch -> System.out.print(ch + " "));
 
     }
 }

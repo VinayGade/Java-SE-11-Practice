@@ -21,8 +21,5 @@ public class CollectionDefaultStatic {
 
         System.out.println("\nFruits sorted in reverse order :");
         fruits.forEach(System.out::println);
-
-
-
     }
 }

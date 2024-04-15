@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class Duplicates {
 
     List<Integer> listDuplicateUsingFilterAndSetAdd(List<Integer> list) {
-        Set<Integer> elements = new HashSet<Integer>();
+        Set<Integer> elements = new HashSet<>();
         return list.stream()
                 .filter(n -> !elements.add(n))
                 .collect(Collectors.toList());
@@ -58,12 +58,20 @@ public class Duplicates {
 
         Map<Integer, Integer> frequency=new HashMap<>();
 
+        /*
         for(int x: numbers){
             if(frequency.containsKey(x))
                 frequency.put(x, frequency.get(x)+1);
             else
                 frequency.put(x, 1);
         }
+         */
+
+        numbers.forEach(x -> //{
+            //if(frequency.containsKey(x))
+                frequency.put(x, frequency.getOrDefault(x,0)+1)
+            //}
+        );
 
         System.out.println("duplicate elements using frequency map:");
         frequency.forEach((k, v)->{
@@ -107,14 +115,25 @@ public class Duplicates {
 
         System.out.println("count all elements using HashMap");
 
-        Map<Integer, Long> map = new HashMap<>();
+        Map<Integer, Integer> map = new HashMap<>();
+        // prior to Java SE 8
+        /*
         for (int i : numArray) {
             if (map.containsKey(i)) { //this element is in the map already
                 map.put(i, map.get(i) + 1);
             } else { //found a new element
-                map.put(i, 1L);
+                map.put(i, 1);
             }
         }
+        */
+
+        System.out.println("count all elements using stream().foreach()");
+
+        Arrays.stream(numArray).forEach(x->
+                map.put(x, map.getOrDefault(x, 0)+1));
+
+        map.forEach((k, v) ->
+                System.out.println("element = "+k+", frequency = "+v));
 
         System.out.println("count all elements using counting");
 

@@ -1,22 +1,47 @@
 package streams;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.IntSummaryStatistics;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import beans.enums.Category;
 import beans.Dish;
 
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.*;
 
 public class CollectingStreams {
 
     public static void main(String[] args) {
 
         CollectingStreams collectingStreams = new CollectingStreams();
+
+        List<String> givenList = Arrays.asList("a", "bb", "ccc", "dd");
+
+        List<String> resultList = givenList.stream()
+                .collect(toCollection(LinkedList::new));
+
+        Map<String, Integer> resultMap = givenList.stream()
+                .collect(toMap(Function.identity(), String::length));
+
+        givenList.add("bb");  // givenList contains duplicates
+
+        Map<String, Integer> distinctResultMap = givenList.stream()
+                .collect(toMap(Function.identity(), String::length, (item, identicalItem) -> item));
+
+        Map<String, Integer> unModifiedResultMap = givenList.stream()
+                .collect(toUnmodifiableMap(Function.identity(), String::length));
+
+        String joinedResult = givenList.stream()
+                .collect(joining(" "));
+
+        String appendedResult = givenList.stream()
+                .collect(joining(" ", "PRE-", "-POST")); //append start and end
+
+        Map<Integer, Set<String>> groupResult = givenList.stream()
+                .collect(groupingBy(String::length, toSet()));
+
+        Map<Boolean, List<String>> partitoinedResult = givenList.stream()
+                .collect(partitioningBy(s -> s.length() > 2));
+
 
         List<Dish> menuCard = collectingStreams.populateDishes();
 

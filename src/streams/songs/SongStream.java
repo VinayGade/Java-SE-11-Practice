@@ -153,6 +153,23 @@ public class SongStream {
             song.ifPresent(System.out::println);
         });
 
+        //most frequently played track title and artist each genre
+
+        // Total time of playlist (Hours , mins format)
+
+        int totalTime = playlist.stream().reduce(0, (time, song)
+                -> (time + (song.getTime_mins() * 60 + song.getTime_secs())), Integer::sum);
+
+        int secs = totalTime % 60;
+        int mins = totalTime / 60;
+        int hrs = 0;
+        if(mins > 60) {
+            hrs = mins / 60;
+            mins = mins % 60;
+        }
+
+        System.out.println("\n Playlist total time = "+hrs+" hours "+mins+" minutes "+secs+" seconds.");
+
         System.out.println("\nPlaylist summary Genre");
 
         Map<Genre, IntSummaryStatistics> summarizePlaylistPerGenre = playlist.stream()

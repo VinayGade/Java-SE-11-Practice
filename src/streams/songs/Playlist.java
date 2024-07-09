@@ -3,13 +3,16 @@ package streams.songs;
 import beans.Song;
 import beans.enums.Genre;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Playlist {
 
     public List<Song> populatePlaylist() {
         return
-        List.of(
+        Arrays.asList(
+                new Song(8, "Radioactive", "Imagine Dragons", Genre.ROCK, "Radioactive", "English", 4, 36, 10, 38, true),
+
                 new Song(1, "Espresso", "Sabrina Carpenter", Genre.DANCE, "Espresso", "English", 2, 55, 8, 20, true),
                 new Song(2, "If Only I", "Bebe Rexha", Genre.DANCE, "If Only I", "English", 2, 23, 10, 25, true),
                 new Song(3, "The Greatest", "Sia", Genre.JAZZ, "This is Acting", "English", 3, 31, 8, 15, true),

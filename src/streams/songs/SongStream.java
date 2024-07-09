@@ -102,7 +102,7 @@ public class SongStream {
 
         System.out.println("\nLeast Played Track");
         if(leastPlayed.isPresent())
-            System.out.println(leastPlayed.toString());
+            System.out.println(leastPlayed.get());
 
         //most frequently played track (most favorite song(s))
         Optional<Song> favoriteSong = playlist.stream()
@@ -115,29 +115,33 @@ public class SongStream {
                         */
 
         System.out.println("\nMost Favorite Song");
-        if(favoriteSong.isPresent())
-            System.out.println(favoriteSong.toString());
+        favoriteSong.ifPresent(System.out::println);
 
         //longest track
+        Map<Genre, Optional<Song>> longestTrackGenre = playlist.stream().collect(
+                Collectors.groupingBy(Song::getGenre,
+                        Collectors.maxBy(Comparator.comparingInt(
+                                song -> (song.getTime_mins() * 60 + song.getTime_secs())))));
+
+        System.out.println("\nLongest Track each Genre:");
+        longestTrackGenre.forEach((genre, song) -> {
+            System.out.println(genre.name());
+            song.ifPresent(System.out::println);
+        });
 
 
         //smallest track
+        Optional<Song> smallestTrack = playlist.stream().sorted(Comparator.comparingInt(
+                (song) -> (song.getTime_mins() * 60 +song.getTime_secs()))).findFirst();
+
+        Optional<Song> largestTrack = playlist.stream().max(Comparator.comparingInt(
+                (song) -> (song.getTime_mins() * 60 + song.getTime_secs())));
+
+        System.out.println("Longest Track : "+(largestTrack.isPresent()?largestTrack.get():"Not found"));
+
+        System.out.println("smallest Track : "+(smallestTrack.isPresent()?smallestTrack.get():"Not found"));
 
         //most frequently played track each genre
-
-        /*
-        System.out.println("\n  Maximum calorie dish per Category");
-
-        Map<Category, Optional<Dish>> maxCalorieDishesPerCategory = menuCard.stream()
-                .collect(Collectors.groupingBy(Dish::getCategory,
-                        Collectors.maxBy(Comparator.comparingInt(
-                                Dish::getCalories))));
-
-        maxCalorieDishesPerCategory.forEach((category, dish) -> {
-            System.out.println(category.toString());
-            dish.ifPresent(System.out::println);
-        });*/
-
         System.out.println("\n Most frequently played track each genre");
 
         Map<Genre, Optional<Song>> mostFrequentPlayedSongGenre = playlist.stream().collect(
@@ -198,9 +202,28 @@ public class SongStream {
         System.out.println("\n ........ sorting .........");
 
         //sort by artist
+        System.out.println("\nsort by artist");
+        playlist.sort(Comparator.comparing(Song::getArtist));
+        playlist.forEach(System.out::println);
+
         //sort by album
+        System.out.println("\nsort by album");
+        playlist.sort(Comparator.comparing(Song::getAlbum));
+        playlist.forEach(System.out::println);
+
         //sort by genre
+        System.out.println("\nsort by genre");
+        playlist.sort(Comparator.comparing(song -> song.getGenre().name()));
+        playlist.forEach(System.out::println);
+
         //sort by rating (reverse)
+        System.out.println("\nsort by rating (reverse) Highest rated first");
+        playlist.sort(Comparator.comparingInt(Song::getRating).reversed());
+        playlist.forEach(System.out::println);
+
         //sort by plays (reverse)
+        System.out.println("\nsort by plays (reverse) Most Played First");
+        playlist.sort(Comparator.comparingInt(Song::getPlays).reversed());
+        playlist.forEach(System.out::println);
     }
 }

@@ -28,6 +28,15 @@ public class ConcurrentVsSynchronizedMap {
         map.put(1, "baeldung");
         map.put(2, "HashMap");
 
+        // Fail Safe iterator
+        /*
+Fail-safe iterators allow modifications of a collection while iterating over it.
+These iterators don’t throw any Exception if a collection is modified while iterating over it.
+They use copy of original collection to traverse over the elements of the collection.
+These iterators require extra memory for cloning of collection.
+Ex : ConcurrentHashMap, CopyOnWriteArrayList
+        * */
+
         Iterator<Map.Entry<Integer, String>> iterator = map.entrySet().iterator();
         while (iterator.hasNext()) {
             map.put(3, "Modification");

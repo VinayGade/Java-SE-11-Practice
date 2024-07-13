@@ -3,6 +3,16 @@ package concurrency.concurrent_collection.fail_fast_safe_iter;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/*
+These iterators throw ConcurrentModificationException if a collection is modified while iterating over it.
+
+They use original collection to traverse over the elements of the collection.
+
+These iterators don’t require extra memory.
+
+Ex : Iterators returned by ArrayList, Vector, HashMap.
+* */
+
 public class FailFastExample {
     public static void main(String[] args) {
         ArrayList<Integer> al = new ArrayList<>();

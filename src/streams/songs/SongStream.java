@@ -19,14 +19,14 @@ public class SongStream {
         List<Song> favourites = playlist.stream().filter(Song::isFavourite)
                 .collect(Collectors.toList());
 
-        System.out.println("\nfavourites songs");
+        System.out.println("\n1. favourites songs");
 
         favourites.forEach(System.out::println);
 
         long popCount = playlist.stream()
                 .filter(song -> song.getGenre().name().equalsIgnoreCase("POP"))
                 .count();
-        System.out.println("\nPop song count =" + popCount);
+        System.out.println("\n2. Pop song count =" + popCount);
 
         List<Song> popular = playlist.stream()
                 .filter(song -> song.getRating() > 7)
@@ -40,15 +40,15 @@ public class SongStream {
                 .filter(song -> song.getTitle().equalsIgnoreCase(song.getAlbum()))
                 .collect(Collectors.toList());
 
-        System.out.println("\nPopular songs");
+        System.out.println("\n3. Popular songs");
         System.out.println("\nPopular song count =" + popular.size());
         popular.forEach(System.out::println);
 
-        System.out.println("\nhit songs");
+        System.out.println("\n4. hit songs");
         System.out.println("\nhit song count =" + hits.size());
         hits.forEach(System.out::println);
 
-        System.out.println("\nsong title == album");
+        System.out.println("\n5. song title == album");
         System.out.println("\nsong title == album =" + identicals.size());
         identicals.forEach(System.out::println);
 
@@ -62,7 +62,7 @@ public class SongStream {
         Map<Integer, List<Song>> groupByRating = playlist.stream()
                 .collect(groupingBy(Song::getRating));
 
-        System.out.println("\nPlaylist Group by Language :");
+        System.out.println("\n6. Playlist Group by Language :");
 
         Map<String, List<Song>> groupByLanguage = playlist.stream()
                 .collect(Collectors.groupingBy(Song::getLanguage,
@@ -74,21 +74,21 @@ public class SongStream {
             v.forEach(System.out::println);
         });
 
-        System.out.println("\nPlaylist group by artist");
+        System.out.println("\n7. Playlist group by artist");
         groupByArtist.forEach((k, v) -> {
             System.out.println("\nArtist=" + k);
             System.out.println("\nsongs");
             v.forEach(System.out::println);
         });
 
-        System.out.println("\nPlaylist group by Gnere");
+        System.out.println("\n8. Playlist group by Gnere");
         groupByGenre.forEach((k, v) -> {
             System.out.println("\nGnere=" + k);
             System.out.println("\nsongs");
             v.forEach(System.out::println);
         });
 
-        System.out.println("\nPlaylist group by Rating");
+        System.out.println("\n9. Playlist group by Rating");
         groupByRating.forEach((k, v) -> {
             System.out.println("\nRating=" + k);
             System.out.println("\nsongs");
@@ -100,7 +100,7 @@ public class SongStream {
                 .collect(Collectors.minBy(
                         Comparator.comparingInt(Song::getPlays)));
 
-        System.out.println("\nLeast Played Track");
+        System.out.println("\n10. Least Played Track");
         if(leastPlayed.isPresent())
             System.out.println(leastPlayed.get());
 
@@ -114,8 +114,18 @@ public class SongStream {
                         Comparator.comparingInt(Song::getPlays)));
                         */
 
-        System.out.println("\nMost Favorite Song");
+        System.out.println("\n11. Most Favorite Song");
         favoriteSong.ifPresent(System.out::println);
+
+        // Highest Rated Song(s)
+
+        Optional<Song> highestRated = playlist.stream()
+                .collect(Collectors.reducing(
+                        (song1, song2) ->
+                                song1.getRating() > song2.getRating() ? song1: song2));
+
+        System.out.println("\n12. Highest Rated Song");
+        highestRated.ifPresent(System.out::println);
 
         //longest track
         Map<Genre, Optional<Song>> longestTrackGenre = playlist.stream().collect(
@@ -123,7 +133,7 @@ public class SongStream {
                         Collectors.maxBy(Comparator.comparingInt(
                                 song -> (song.getTime_mins() * 60 + song.getTime_secs())))));
 
-        System.out.println("\nLongest Track each Genre:");
+        System.out.println("\n13. Longest Track each Genre:");
         longestTrackGenre.forEach((genre, song) -> {
             System.out.println(genre.name());
             song.ifPresent(System.out::println);
@@ -137,12 +147,12 @@ public class SongStream {
         Optional<Song> largestTrack = playlist.stream().max(Comparator.comparingInt(
                 (song) -> (song.getTime_mins() * 60 + song.getTime_secs())));
 
-        System.out.println("Longest Track : "+(largestTrack.isPresent()?largestTrack.get():"Not found"));
+        System.out.println("14 Longest Track : "+(largestTrack.isPresent()?largestTrack.get():"Not found"));
 
-        System.out.println("smallest Track : "+(smallestTrack.isPresent()?smallestTrack.get():"Not found"));
+        System.out.println("15 smallest Track : "+(smallestTrack.isPresent()?smallestTrack.get():"Not found"));
 
         //most frequently played track each genre
-        System.out.println("\n Most frequently played track each genre");
+        System.out.println("\n16 Most frequently played track each genre");
 
         Map<Genre, Optional<Song>> mostFrequentPlayedSongGenre = playlist.stream().collect(
                 Collectors.groupingBy(Song::getGenre,
@@ -168,9 +178,9 @@ public class SongStream {
             mins = mins % 60;
         }
 
-        System.out.println("\n Playlist total time = "+hrs+" hours "+mins+" minutes "+secs+" seconds.");
+        System.out.println("\n17 Playlist total time = "+hrs+" hours "+mins+" minutes "+secs+" seconds.");
 
-        System.out.println("\nPlaylist summary Genre");
+        System.out.println("\n18 Playlist summary Genre");
 
         Map<Genre, IntSummaryStatistics> summarizePlaylistPerGenre = playlist.stream()
                 .collect(Collectors.groupingBy(Song::getGenre,
@@ -188,7 +198,7 @@ public class SongStream {
                         .collect(groupingBy(
                                 Song::getGenre, Collectors.counting()));
 
-        System.out.println("\nfrequency of track each genre");
+        System.out.println("\n19 frequency of track each genre");
         songByGenre.forEach((k, v) -> {
             System.out.println(k+" : "+v);
         });
@@ -199,13 +209,13 @@ public class SongStream {
                         .collect(groupingBy(
                                 Song::getLanguage, Collectors.counting()));
 
-        System.out.println("\nfrequency of track each Language");
+        System.out.println("\n20 frequency of track each Language");
         songByLanguage.forEach((k, v) -> {
             System.out.println(k+" : "+v);
         });
 
 
-        System.out.println("\nPartition by Favorite :");
+        System.out.println("\n21 Partition by Favorite :");
 
         Map<Boolean, Set<Song>> partitionByFavorite = playlist.stream()
                 .collect(Collectors.partitioningBy(Song::isFavourite,
@@ -216,7 +226,7 @@ public class SongStream {
             v.forEach(System.out::println);
         });
 
-        System.out.println("\n ........ sorting .........");
+        System.out.println("\n22 ........ sorting .........");
 
         //sort by artist
         System.out.println("\nsort by artist");

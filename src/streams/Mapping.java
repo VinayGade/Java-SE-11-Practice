@@ -1,9 +1,6 @@
 package streams;
 
-import beans.Department;
-import beans.Dish;
-import beans.Employee;
-import beans.Instructor;
+import beans.*;
 import beans.enums.Category;
 
 import java.util.*;

@@ -47,7 +47,7 @@ public class DishesGenerator {
 
                 new Dish(101,"seasonal fruit salad", 70, 120.0, Category.FRUIT,true),
 
-                new Dish(705,"Stuffed Prawns ", 180, 300, Category.FISH,false),
+                new Dish(705,"Stuffed Prawns", 180, 300, Category.FISH,false),
 
                 new Dish(110,"Chikoo Milk Shake", 65, 95.0, Category.FRUIT,true),
 
@@ -93,13 +93,12 @@ public class DishesGenerator {
 
                 new Dish(731,"Fish Masala", 172, 365, Category.FISH,false),
 
-
                 new Dish(521,"Butter Chicken", 195, 470, Category.CHICKEN,false),
                 new Dish(529,"Chicken Kheema", 210, 450, Category.CHICKEN,false),
 
                 new Dish(223,"Veg Biryani", 55, 145, Category.VEG, true),
 
-                new Dish(301,"French Fries", 90, 530, Category.STARTER ,true),
+                new Dish(301,"French Fries", 90, 50, Category.STARTER ,true),
 
                 new Dish(805,"Mutton Paya Soup", 170, 280, Category.MEAT,false),
                 new Dish(815,"Mutton Biryani", 210, 372, Category.MEAT,false),

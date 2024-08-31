@@ -18,6 +18,40 @@ public class Mapping {
         });
     }
 
+    public static int getPopulation(List<Country> countries, String continent){
+
+        //Way 1 : Prior to Java 8
+        /*
+        int sum = 0;
+        for(Country c: countries){
+            if(c.getContinent().equals(continent))
+                sum+=c.getPopulation();
+        }
+        return sum;
+        */
+
+        //Way 2 : using map and reduce
+        /*
+        Stream<Country> countriesInContinent = countries.stream()
+                .filter(country -> {
+                   return country.getContinent().equals(continent);
+                });
+
+        Stream<Integer> populations = countriesInContinent.map(
+                Country::getPopulation
+        );
+
+        int population = populations.reduce(0, Integer::sum);
+        return population;
+         */
+
+        //Way 3: Optimized way
+        Stream<Integer> populationsContinent = countries.stream()
+                .map(c -> c.getContinent().equals(continent) ? c.getPopulation() : 0);
+
+        return populationsContinent.reduce(0, Integer::sum);
+    }
+
     public static void main(String[] args) {
 
         List<Integer> numbers = Arrays.asList(10, 20, 30, 40, 50, 60, 80, 100);
@@ -30,6 +64,18 @@ public class Mapping {
 
         System.out.println("\nSquare of numbers:");
         squares.forEach(s -> System.out.print(" " + s));
+
+        System.out.println("\n***** Countries Population (in millions) based on continent *****");
+
+        List<Country> countries = populateCountryList();
+
+        int asia = getPopulation(countries, "Asia");
+        int america = getPopulation(countries, "America");
+        int europe = getPopulation(countries, "Europe");
+
+        System.out.println("Asia : "+asia);
+        System.out.println("America : "+america);
+        System.out.println("Europe : "+europe);
 
         System.out.println("\n************** Special Dishes ******************");
 
@@ -201,6 +247,21 @@ public class Mapping {
                         new DishCost(menu.getName(), menu.getPrice()))
                 .sorted(Comparator.comparingDouble(DishCost::getCost))
                 .collect(Collectors.toList());
+    }
+
+    public static List<Country> populateCountryList(){
+        return List.of(new Country("India", "Asia", 434),
+                new Country("China", "Asia", 642),
+                new Country("Japan", "Asia", 92),
+                new Country("Indonesia", "Asia", 83),
+                new Country("Russia", "Europe", 116),
+                new Country("Germany", "Europe", 72),
+                new Country("Italy", "Europe", 49),
+                new Country("France", "Europe", 44),
+                new Country("UK", "Europe", 51),
+                new Country("USA", "America", 181),
+                new Country("Brazil", "America", 68)
+                );
     }
 
     private static class DishCost{ //inner class ... Mapping.DishCost

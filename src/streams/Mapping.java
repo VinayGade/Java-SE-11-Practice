@@ -132,12 +132,27 @@ public class Mapping {
                 .findFirst()
                 .ifPresent(starter -> System.out.println(starter.toString()));
 
+        System.out.println("\nfind Chicken menu in Non-Veg category with highest calories from special dishes:");
+
+        specialMenus.stream()
+                .filter(dish -> dish.getCategory() == Category.CHICKEN)
+                .max(Comparator.comparingInt(Dish::getCalories))
+                .ifPresent(starter -> System.out.println(starter.toString()));
+
         System.out.println("\nfind Egg menu with lowest price:");
 
         specialMenus.stream()
                 .filter(dish -> dish.getCategory() == Category.EGG)
                 .min(Comparator.comparingInt(Dish::getCalories))
                 .ifPresent(starter -> System.out.println(starter.toString()));
+
+        System.out.println("\nfind Chicken menu with lowest price:");
+
+        specialMenus.stream()
+                .filter(dish -> dish.getCategory() == Category.CHICKEN)
+                .sorted(Comparator.comparingDouble(Dish::getPrice))
+                .findFirst()
+                .ifPresent(chickenMenu -> System.out.println(chickenMenu.toString()));
 
         boolean isHealthy = specialMenus.stream()
                 .allMatch(dish -> dish.getCalories() < 350);

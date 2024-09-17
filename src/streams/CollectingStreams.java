@@ -14,7 +14,7 @@ public class CollectingStreams {
 
         CollectingStreams collectingStreams = new CollectingStreams();
 
-        List<String> givenList = Arrays.asList("a", "bb", "ccc", "dd");
+        List<String> givenList = Arrays.asList("a", "bb", "ccc", "dd", "bb");
 
         List<String> resultList = givenList.stream()
                 .collect(toCollection(LinkedList::new));
@@ -22,11 +22,8 @@ public class CollectingStreams {
         Map<String, Integer> resultMap = givenList.stream()
                 .collect(toMap(Function.identity(), String::length));
 
-        givenList.add("bb");  // givenList contains duplicates
-
         Map<String, Integer> distinctResultMap = givenList.stream()
                 .collect(toMap(Function.identity(), String::length, (item, identicalItem) -> item));
-
         Map<String, Integer> unModifiedResultMap = givenList.stream()
                 .collect(toUnmodifiableMap(Function.identity(), String::length));
 

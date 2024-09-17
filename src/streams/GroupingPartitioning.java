@@ -9,6 +9,8 @@ import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toMap;
+
 public class GroupingPartitioning {
 
     //SQL GROUP BY and HAVING
@@ -61,7 +63,7 @@ public class GroupingPartitioning {
 
         System.out.println("\nHigh Calorie and Low Calorie Non-Veg Menu :");
         Map<String, List<Dish>> nonVegMenu = menuCard.stream()
-                .filter(Dish::isVegOnly)
+                .filter((dish -> !dish.isVegOnly()))
                 .collect(Collectors.groupingBy(
                         dish -> dish.getCalories() <= 170 ? "Low Calorie Menu" : "High Calorie Menu"));
 
@@ -232,6 +234,10 @@ public class GroupingPartitioning {
                         Collectors.summarizingDouble(
                                 Dish::getPrice)));
 
+        long chickenCount = summarizeCostDishPerCategory.get(Category.CHICKEN).getCount();
+
+        System.out.println("Chicken Dish count = "+chickenCount);
+
         summarizeCostDishPerCategory.forEach((category, avgCalories) -> {
             System.out.println(category.name());
             System.out.println(avgCalories);
@@ -280,12 +286,14 @@ public class GroupingPartitioning {
         charFrequencyMap.entrySet()
                 .stream()
                 .filter(entry -> entry.getValue()>1)
-                        .map(entry -> entry.getKey())
-                                .collect(Collectors.toList());
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
 
         System.out.println(charMap);
 
         System.out.println("\nChar Frequency Map" + charFrequencyMap);
+
+        System.out.println("\nrepeatingChars in str " + charFrequencyMap);
 
         System.out.println("\n\n----------------------------Duplicate elements in String -------------------------------");
 

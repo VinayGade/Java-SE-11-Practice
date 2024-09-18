@@ -252,5 +252,32 @@ public class SongStream {
         System.out.println("\nsort by plays (reverse) Most Played First");
         playlist.sort(Comparator.comparingInt(Song::getPlays).reversed());
         playlist.forEach(System.out::println);
+
+        System.out.println("\nCollectors: GroupingBy, joining");
+        // Join song titles into a single string with commas
+        String playlistTitles = playlist.stream()
+                .map(Song::getTitle)
+                .collect(Collectors.joining(", "));
+
+        System.out.println("Playlist Titles: " + playlistTitles);
+
+        // Join favorite songs with custom formatting
+        String favouriteSongs = playlist.stream()
+                .filter(Song::isFavourite)
+                .map(Song::getTitle)
+                .collect(Collectors.joining(", ", "Favourites: [", "]"));
+
+        System.out.println(favouriteSongs);
+
+        // Group songs by genre and join titles within each genre
+        String songsByGenre = playlist.stream()
+                .collect(Collectors.groupingBy(Song::getGenre, Collectors.mapping(Song::getTitle, Collectors.joining(", "))))
+                .entrySet()
+                .stream()
+                .map(entry -> entry.getKey() + ": " + entry.getValue())
+                .collect(Collectors.joining("\n"));
+
+        System.out.println("\nSongs Grouped by Genre:");
+        System.out.println(songsByGenre);
     }
 }

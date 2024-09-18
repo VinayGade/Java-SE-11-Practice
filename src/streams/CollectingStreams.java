@@ -19,14 +19,18 @@ public class CollectingStreams {
         List<String> resultList = givenList.stream()
                 .collect(toCollection(LinkedList::new));
 
+        /*
         Map<String, Integer> resultMap = givenList.stream()
                 .collect(toMap(Function.identity(), String::length));
+         */
 
         Map<String, Integer> distinctResultMap = givenList.stream()
                 .collect(toMap(Function.identity(), String::length, (item, identicalItem) -> item));
+
+        /*
         Map<String, Integer> unModifiedResultMap = givenList.stream()
                 .collect(toUnmodifiableMap(Function.identity(), String::length));
-
+         */
         String joinedResult = givenList.stream()
                 .collect(joining(" "));
 
@@ -38,7 +42,6 @@ public class CollectingStreams {
 
         Map<Boolean, List<String>> partitoinedResult = givenList.stream()
                 .collect(partitioningBy(s -> s.length() > 2));
-
 
         List<Dish> menuCard = collectingStreams.populateDishes();
 
@@ -71,7 +74,7 @@ public class CollectingStreams {
                 .collect(Collectors.maxBy(dishCaloriesComparator));
 
         Optional<Dish> minCostDish = menuCard.parallelStream()
-                .collect(Collectors.minBy(dishCostComparator));
+                .min(dishCostComparator);
 
         System.out.println("\n Maximum calories Dish on Menu Card ="+maxCaloriesDish.get().toString());
 
@@ -111,6 +114,16 @@ public class CollectingStreams {
                 .collect(Collectors.joining(",\n"));
 
         System.out.println("\nMenu Names ="+fruitMenuNames);
+
+        // Group dishes by category and create menu sections using Collectors.joining
+        String menuCardJoined = menuCard.stream()
+                .collect(Collectors.groupingBy(Dish::getCategory, Collectors.mapping(Dish::getName, Collectors.joining(", "))))
+                .entrySet()
+                .stream()
+                .map(entry -> entry.getKey() + ": " + entry.getValue())
+                .collect(Collectors.joining("\n"));
+
+        System.out.println("\nMenu Names Grouped by category joined = \n"+menuCardJoined);
 
         System.out.println("\nGeneralized summarization with reduction :");
 

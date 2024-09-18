@@ -8,6 +8,7 @@ import java.util.*;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toMap;
 
@@ -265,6 +266,17 @@ public class GroupingPartitioning {
         partitionByCategory.forEach((type, dishes) -> {
             System.out.println(type ? "Veg" : "Non-Veg");
             dishes.forEach(System.out::println);
+        });
+
+        System.out.println("\nPartition even/odd numbers from 1 to N :");
+
+        Map<Boolean, List<Integer>> partitionEvens = IntStream.range(1, 100)
+                .boxed() // Convert IntStream to Stream<Integer>
+                .collect(Collectors.partitioningBy(x -> x%2==0, Collectors.toList()));
+
+        partitionEvens.forEach((isEven, nums) -> {
+            System.out.println(isEven ? "Even Numbers" : "Odd Numbers");
+            nums.forEach(System.out::println);
         });
 
         System.out.println("\n\n----------------------------Part 3 : character count in String -------------------------------");

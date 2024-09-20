@@ -18,14 +18,14 @@ public class Sum1ToN extends RecursiveAction {
     }
     @Override
     protected void compute() {
-        int n = data.size();
-        if(n<=THRESHOLD) {
-            long sum = computeSum(n);
+        //int n = data.size();
+        if(data.size()<=THRESHOLD) {
+            long sum = computeSum(data.size());
             System.out.println("Sum = "+sum);
         } else {
-            int mid = n / 2;
+            int mid = data.size() / 2;
             Sum1ToN firstSubTask = new Sum1ToN(data.subList(0, mid));
-            Sum1ToN secondSubTask = new Sum1ToN(data.subList(mid, n));
+            Sum1ToN secondSubTask = new Sum1ToN(data.subList(mid, data.size()));
 
             firstSubTask.fork();
             secondSubTask.compute();

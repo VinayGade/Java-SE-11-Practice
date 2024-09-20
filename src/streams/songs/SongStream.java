@@ -214,7 +214,6 @@ public class SongStream {
             System.out.println(k+" : "+v);
         });
 
-
         System.out.println("\n21 Partition by Favorite :");
 
         Map<Boolean, Set<Song>> partitionByFavorite = playlist.stream()

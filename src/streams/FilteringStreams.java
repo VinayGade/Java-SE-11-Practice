@@ -51,52 +51,67 @@ public class FilteringStreams {
         System.out.println("\n ------------------------------------------------------------------------------");
 
         List<Dish> specialMenu = Arrays.asList(
-                new Dish(101,"seasonal fruit salad", 42, 120.0, Category.FRUIT,true),
-                new Dish(107,"Watermelon Juice", 35, 70.0, Category.FRUIT,true),
-                new Dish(110,"Chikoo Milk Shake", 59, 95.0, Category.FRUIT,true),
-                new Dish(108,"Mango Milk Shake", 55, 135.0, Category.FRUIT,true),
-
-                new Dish(705,"Stuffed Prawns ", 180, 300, Category.FISH,false),
-                new Dish(702,"Prawns Biryani", 172, 340, Category.FISH,false),
-                new Dish(709,"Prawns Khichadi", 195, 385, Category.FISH,false),
-                new Dish(721,"Pomfret Rawa Fry", 175, 357, Category.FISH,false),
-                new Dish(725,"Bombil Fry", 165, 245, Category.FISH,false),
-                new Dish(728,"Surmai Masala Fry", 175, 350, Category.FISH,false),
-                new Dish(735,"Surmai Gaon Curry", 155, 400, Category.FISH,false),
-                new Dish(738,"Fish Curry", 145, 350, Category.FISH,false),
-                new Dish(731,"Fish Masala", 172, 365, Category.FISH,false),
-
-                new Dish(201,"Steam Rice", 45, 81, Category.VEG, true),
-                new Dish(207,"Jeera Fried Rice", 45, 87, Category.VEG, true),
-                new Dish(211,"Dal Khichadi", 85, 125, Category.VEG, true),
-                new Dish(223,"Veg Biryani", 75, 145, Category.VEG, true),
-
-                new Dish(255,"Paneer Tikka Masala", 98, 185, Category.VEG, true),
-                new Dish(245,"Veg Handi", 78, 165, Category.VEG, true),
-                new Dish(243,"Veg Hyderabadi", 71, 195, Category.VEG, true),
-
-                new Dish(605,"Fried Egg", 128, 90, Category.EGG,false),
-                new Dish(609,"Egg Fried Rice", 168, 180, Category.EGG,false),
-                new Dish(604,"Egg Bhurji", 184, 165, Category.EGG,false),
-
                 new Dish(501,"Chicken Lollipop Dry", 198, 180, Category.CHICKEN,false),
                 new Dish(507,"Tandoori Chicken", 201, 380, Category.CHICKEN,false),
-                new Dish(523,"Chicken Tikka Masala", 195, 480, Category.CHICKEN,false),
-                new Dish(517,"Chicken Salad", 155, 400, Category.CHICKEN,false),
-                new Dish(521,"Butter Chicken", 195, 470, Category.CHICKEN,false),
-                new Dish(531,"Chicken Biryani", 175, 410, Category.CHICKEN,false),
-                new Dish(529,"Chicken Kheema", 210, 450, Category.CHICKEN,false),
-
-                new Dish(301,"French Fries", 90, 530, Category.STARTER ,true),
-                new Dish(318,"Masala Dosa", 70, 160, Category.STARTER,true),
-                new Dish(323,"Veg Spring Roll", 75, 210, Category.STARTER,true),
-                new Dish(328,"Paneer Crispy", 80, 220, Category.STARTER,true),
-                new Dish(329,"Veg Crispy", 72, 205, Category.STARTER,true),
 
                 new Dish(805,"Mutton Paya Soup", 170, 280, Category.MEAT,false),
                 new Dish(826,"Mutton Fry", 240, 362, Category.MEAT,false),
+
+                new Dish(245,"Veg Handi", 78, 165, Category.VEG, true),
+                new Dish(243,"Veg Hyderabadi", 71, 195, Category.VEG, true),
+
+                new Dish(728,"Surmai Masala Fry", 175, 350, Category.FISH,false),
+                new Dish(735,"Surmai Gaon Curry", 155, 400, Category.FISH,false),
+
+                new Dish(301,"French Fries", 90, 530, Category.STARTER ,true),
+                new Dish(318,"Masala Dosa", 70, 160, Category.STARTER,true),
+
+                new Dish(101,"seasonal fruit salad", 42, 120.0, Category.FRUIT,true),
+
+                new Dish(521,"Butter Chicken", 195, 470, Category.CHICKEN,false),
+
+                new Dish(108,"Mango Milk Shake", 55, 135.0, Category.FRUIT,true),
+
+                new Dish(605,"Fried Egg", 128, 90, Category.EGG,false),
+
+                new Dish(705,"Stuffed Prawns ", 180, 300, Category.FISH,false),
+                new Dish(702,"Prawns Biryani", 172, 340, Category.FISH,false),
+
+                new Dish(725,"Bombil Fry", 165, 245, Category.FISH,false),
+
+                new Dish(201,"Steam Rice", 45, 81, Category.VEG, true),
+                new Dish(207,"Jeera Fried Rice", 45, 87, Category.VEG, true),
+
+                new Dish(255,"Paneer Tikka Masala", 98, 185, Category.VEG, true),
+
+                new Dish(709,"Prawns Khichadi", 195, 385, Category.FISH,false),
+                new Dish(721,"Pomfret Rawa Fry", 175, 357, Category.FISH,false),
+
+                new Dish(107,"Watermelon Juice", 35, 70.0, Category.FRUIT,true),
+                new Dish(110,"Chikoo Milk Shake", 59, 95.0, Category.FRUIT,true),
+
+                new Dish(609,"Egg Fried Rice", 168, 180, Category.EGG,false),
+                new Dish(604,"Egg Bhurji", 184, 165, Category.EGG,false),
+
+                new Dish(211,"Dal Khichadi", 85, 125, Category.VEG, true),
+                new Dish(223,"Veg Biryani", 75, 145, Category.VEG, true),
+
+                new Dish(523,"Chicken Tikka Masala", 195, 480, Category.CHICKEN,false),
+                new Dish(517,"Chicken Salad", 155, 400, Category.CHICKEN,false),
+
+                new Dish(323,"Veg Spring Roll", 75, 210, Category.STARTER,true),
+                new Dish(328,"Paneer Crispy", 80, 220, Category.STARTER,true),
+
+                new Dish(531,"Chicken Biryani", 175, 410, Category.CHICKEN,false),
+                new Dish(529,"Chicken Kheema", 210, 450, Category.CHICKEN,false),
+
+                new Dish(329,"Veg Crispy", 72, 205, Category.STARTER,true),
+
                 new Dish(821,"Mutton Masala", 190, 385, Category.MEAT,false),
-                new Dish(815,"Mutton Biryani", 210, 372, Category.MEAT,false)
+                new Dish(815,"Mutton Biryani", 210, 372, Category.MEAT,false),
+
+                new Dish(738,"Fish Curry", 145, 350, Category.FISH,false),
+                new Dish(731,"Fish Masala", 172, 365, Category.FISH,false)
         );
 
         // enlist all non-veg items

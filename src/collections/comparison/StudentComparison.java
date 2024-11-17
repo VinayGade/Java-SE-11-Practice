@@ -2,9 +2,8 @@ package collections.comparison;
 
 import beans.Student;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class StudentComparison {
 
@@ -30,5 +29,39 @@ public class StudentComparison {
         while (studentIterator.hasNext()){
             System.out.println(studentIterator.next().toString());
         }
+
+        List<String> names = mapNames(students);
+
+        String sorted = isSorted(names) ? "YES": "NO";
+
+        System.out.println("Student names sorted w.r.t. names :"+sorted);
+
+        students.sort(Comparator.comparing(Student::getName));
+
+        names = mapNames(students);
+
+        sorted = isSorted(names) ? "YES": "NO";
+
+        System.out.println("Student names sorted w.r.t. names :"+sorted);
+    }
+
+    public static boolean isSorted(List<String> listOfStrings) {
+        return isSorted(listOfStrings, listOfStrings.size());
+    }
+
+    public static boolean isSorted(List<String> listOfStrings, int index) {
+        if (index < 2) {
+            return true;
+        } else if (listOfStrings.get(index - 2).compareTo(listOfStrings.get(index - 1)) > 0) {
+            return false;
+        } else {
+            return isSorted(listOfStrings, index - 1);
+        }
+    }
+
+    static List<String> mapNames(List<Student> students){
+        return students.stream()
+                .map(Student::getName)
+                .collect(Collectors.toList());
     }
 }

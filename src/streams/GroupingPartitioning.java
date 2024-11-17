@@ -25,7 +25,6 @@ public class GroupingPartitioning {
                         "SQL", "JavaScript", "TypeScript", "R", "Elixir", "Erlang", "Rust",
                         "OCaml", "Racket", "F#", "Lisp", "Cobol", "Haskell", "Closure", "Julia");
 
-
         Map<Integer, List<String>> programmingGroups =
                 programmingLanguages.stream()
                         .collect(Collectors.groupingBy(String::length));
@@ -78,7 +77,6 @@ public class GroupingPartitioning {
                 .collect(Collectors.groupingBy(Dish::getCategory,
                         Collectors.filtering(Dish::isVegOnly, Collectors.toList())
                 ));
-
 
         System.out.println("\nVeg Menu Group by category:");
         for (Map.Entry<Category, List<Dish>> vegMenuEntry : vegMenu.entrySet()) {
@@ -334,5 +332,8 @@ public class GroupingPartitioning {
 
         distinctChars.forEach(ch -> System.out.print(ch + " "));
 
+        var distincts = distinctChars.toArray();
+
+        System.out.println("distincts is object array");
     }
 }

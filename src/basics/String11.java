@@ -1,4 +1,4 @@
-package com.openjdk11;
+package basics;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,15 +26,21 @@ public class String11 {
 
         lines.forEach(System.out::println);
 
+        String s = "GeeksForGeeks\nGeeksForGeeks";
+        List<String> result = s.lines().collect(Collectors.toList());
+
+        System.out.println(result);
+
         String str = "";
         String str2 = "     ";
 
-        // String isBlank
+        // String isBlank, isEmpty : difference
         // Java 6
         boolean isBlankStr = isBlankString(str);
         boolean isBlankStr2 = isBlankString(str2);
 
         System.out.println("str isBlank ? "+isBlankStr+", str2 isBlank ? "+isBlankStr2);
+        System.out.println("\nstr isEmpty ? "+str.isEmpty()+", str2 isEmpty ? "+str2.isEmpty());
 
         // Java 11
         System.out.println("\nstr isBlank ? "+str.isBlank()+

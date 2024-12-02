@@ -1,4 +1,4 @@
-package com.openjdk11;
+package basics;
 
 import beans.Instructor;
 import streams.Instructors;

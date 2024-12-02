@@ -1,4 +1,4 @@
-package com.openjdk11;
+package basics;
 
 import java.util.ArrayList;
 import java.util.List;

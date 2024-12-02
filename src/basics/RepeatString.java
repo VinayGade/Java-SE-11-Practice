@@ -1,4 +1,4 @@
-package com.openjdk11;
+package basics;
 
 public class RepeatString {
 
